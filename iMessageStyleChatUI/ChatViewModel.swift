@@ -5,7 +5,6 @@
 //  Created by Athul Kurian on 23/10/24.
 //
 
-import Foundation
 import SwiftUI
 
 class ChatViewModel: ObservableObject {

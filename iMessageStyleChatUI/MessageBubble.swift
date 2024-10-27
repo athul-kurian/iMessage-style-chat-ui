@@ -5,7 +5,6 @@
 //  Created by Athul Kurian on 25/10/24.
 //
 
-import Foundation
 import SwiftUI
 
 struct MessageBubble: View {
@@ -26,19 +25,19 @@ struct MessageBubble: View {
         HStack {
             if isUserMessage {Spacer()}
                 Text(content)
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                .font(.system(size: 17))
-                .foregroundColor(isUserMessage ? .white : .primary)
-                .background(pickBubbleColor(isUserMessage))
-                .cornerRadius(20)
-                .frame(maxWidth: 285, alignment: isUserMessage ? .trailing : .leading)
-                .padding(isUserMessage ? .trailing : .leading, 5)
-                .background(alignment: isUserMessage ? .bottomTrailing : .bottomLeading) {
-                    Image(isUserMessage ? "outgoingTail" : "incomingTail")
-                        .renderingMode(.template)
-                        .foregroundStyle(pickBubbleColor(isUserMessage))
-                }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    .font(.system(size: 17))
+                    .foregroundColor(isUserMessage ? .white : .primary)
+                    .background(pickBubbleColor(isUserMessage))
+                    .cornerRadius(20)
+                    .frame(maxWidth: 285, alignment: isUserMessage ? .trailing : .leading)
+                    .padding(isUserMessage ? .trailing : .leading, 5)
+                    .background(alignment: isUserMessage ? .bottomTrailing : .bottomLeading) {
+                        Image(isUserMessage ? "outgoingTail" : "incomingTail")
+                            .renderingMode(.template)
+                            .foregroundStyle(pickBubbleColor(isUserMessage))
+                    }
             if !isUserMessage {Spacer()}
         }
     }
@@ -61,9 +60,9 @@ struct MessageBubble: View {
                 Spacer()
             }
             Text(dateTime.time)
-            .font(.system(size: 10))
-            .bold()
-            .foregroundStyle(.secondary)
+                .font(.system(size: 10))
+                .bold()
+                .foregroundStyle(.secondary)
             if !isUserMessage {
                 Spacer()
             }
@@ -75,4 +74,20 @@ extension Color {
     static let incomingMessageDark = Color(red: 38/255, green: 38/255, blue: 41/255)
     static let incomingMessageLight = Color(red: 233/255, green: 233/255, blue: 234/255)
     static let outgoingMessageColor = Color(.systemBlue)
+}
+
+#Preview {
+    MessageBubble(
+        isUserMessage: true,
+        content: "Hello, how are you today?",
+        dateTime: ("", "10:10 AM")
+    ).border(.red)
+    .padding()
+    
+    MessageBubble(
+        isUserMessage: false,
+        content: "I'm fine, thanks for asking.",
+        dateTime: ("", "10:10 AM")
+    ).border(.red)
+    .padding()
 }

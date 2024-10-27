@@ -9,15 +9,14 @@
 import SwiftUI
 
 struct ChatView: View {
-    @ObservedObject var messagingViewModel: ChatViewModel
-    @State var typedMessage: String = ""
-
+    @ObservedObject var chatViewModel: ChatViewModel
+    
     var body: some View {
         VStack {
             ScrollView {
                 ScrollViewReader { proxy in
                     VStack {
-                        let messages = messagingViewModel.allMessages
+                        let messages = chatViewModel.allMessages
                         ForEach(0..<messages.count, id: \.self) { index in
                             let message = messages[index]
                             if index == 0 || message.getDateTime().date != messages[index-1].getDateTime().date {
@@ -39,7 +38,8 @@ struct ChatView: View {
                     }
                 }
             }
-            messageField.padding(.bottom, 8)
+            MessageField(chatViewModel: chatViewModel)
+            .padding(.bottom, 8)
         }.padding(.horizontal)
     }
 }
@@ -51,5 +51,5 @@ struct ChatView: View {
     chatPreview.addMessage(content: "Are you keeping busy?", timestamp: Date())
     chatPreview.addMessage(content: "Hello!", timestamp: Date())
     chatPreview.addMessage(content: "How are you doing today?", timestamp: Date())
-    return ChatView(messagingViewModel: chatPreview)
+    return ChatView(chatViewModel: chatPreview)
 }
