@@ -46,10 +46,10 @@ struct ChatView: View {
 
 #Preview {
     let chatPreview = ChatViewModel()
-    chatPreview.addMessage(content: "Hello!", timestamp: Date())
-    chatPreview.addMessage(content: "How are you doing today?", timestamp: Date())
-    chatPreview.addMessage(content: "Are you keeping busy?", timestamp: Date())
-    chatPreview.addMessage(content: "Hello!", timestamp: Date())
-    chatPreview.addMessage(content: "How are you doing today?", timestamp: Date())
+    chatPreview.sendMessage(content: .text("Hello!"), timestamp: Date())
+    chatPreview.sendMessage(content: .text("How are you doing today?"), timestamp: Date())
+    chatPreview.sendMessage(content: .text("Are you keeping busy?"), timestamp: Date())
+    chatPreview.sendMessage(content: .text("Hello!"), timestamp: Date())
+    chatPreview.sendMessage(content: .text("How are you doing today?"), timestamp: Date())
     return ChatView(chatViewModel: chatPreview)
 }

@@ -18,9 +18,9 @@ struct MessageField: View {
             
             Button {
                 let timestamp = Date()
-                let formattedMessage = typedMessage.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !formattedMessage.isEmpty {
-                    chatViewModel.addMessage(content: formattedMessage, timestamp: timestamp)
+                let messageText = typedMessage.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !messageText.isEmpty {
+                    chatViewModel.sendMessage(content: .text(messageText), timestamp: timestamp)
                     typedMessage.removeAll()
                 }
                 

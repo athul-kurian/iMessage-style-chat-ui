@@ -11,7 +11,7 @@ struct MessageBubble: View {
     @Environment(\.colorScheme) var colorScheme
     
     var isUserMessage: Bool
-    let content: String
+    let content: contentType
     let dateTime: (date: String, time: String)
     
     var body: some View {
@@ -24,7 +24,9 @@ struct MessageBubble: View {
     var messageDisplay: some View {
         HStack {
             if isUserMessage {Spacer()}
-                Text(content)
+            switch(content) {
+            case .text(let text) :
+                Text(text)
                     .padding(.horizontal)
                     .padding(.vertical, 8)
                     .font(.system(size: 17))
@@ -33,11 +35,12 @@ struct MessageBubble: View {
                     .cornerRadius(20)
                     .frame(maxWidth: 285, alignment: isUserMessage ? .trailing : .leading)
                     .padding(isUserMessage ? .trailing : .leading, 5)
-                    .background(alignment: isUserMessage ? .bottomTrailing : .bottomLeading) {
+                    .background(alignment: isUserMessage ? .bottomTrailing :.bottomLeading) {
                         Image(isUserMessage ? "outgoingTail" : "incomingTail")
                             .renderingMode(.template)
                             .foregroundStyle(pickBubbleColor(isUserMessage))
                     }
+            }
             if !isUserMessage {Spacer()}
         }
     }
@@ -79,14 +82,14 @@ extension Color {
 #Preview {
     MessageBubble(
         isUserMessage: true,
-        content: "Hello, how are you today?",
+        content: .text("Hello, how are you today?"),
         dateTime: ("", "10:10 AM")
     ).border(.red)
     .padding()
     
     MessageBubble(
         isUserMessage: false,
-        content: "I'm fine, thanks for asking.",
+        content: .text("I'm fine, thanks for asking."),
         dateTime: ("", "10:10 AM")
     ).border(.red)
     .padding()

@@ -8,17 +8,18 @@
 import Foundation
 
 struct ChatModel {
-    private(set) var allMessages: Array<Message>
+    private(set) var allMessages: [Message]
     
-    mutating func appendMessage(newMessageContent: String, timestamp: Date) {
-        allMessages.append(Message(isUserMessage: true, content: newMessageContent, timestamp: timestamp))
-        allMessages.append(fetchReply(to: newMessageContent))
+    mutating func appendMessage(newMessageContent: contentType, timestamp: Date) {
+        let userMessage = Message(isUserMessage: true, content: newMessageContent, timestamp: timestamp)
+        allMessages.append(userMessage)
+        let reply = fetchReply()
+        allMessages.append(reply)
     }
     
-    private func fetchReply(to message: String) -> Message {
-        let replyContent = "replying to \"\(message)\""
-        let replyTimestamp = Date()
-        return Message(isUserMessage: false, content: replyContent, timestamp: replyTimestamp)
+    private func fetchReply() -> Message {
+        let replyContent = contentType.text("This is an automated reply.")
+        return Message(isUserMessage: false, content: replyContent, timestamp: Date())
     }
     
     mutating func removeMessage(id: Double) {
@@ -28,11 +29,11 @@ struct ChatModel {
 
 struct Message: Identifiable {
     let isUserMessage: Bool
-    let content: String
+    let content: contentType
     let timestamp: Date
     let id: Double
     
-    init(isUserMessage: Bool, content: String, timestamp: Date) {
+    init(isUserMessage: Bool, content: contentType, timestamp: Date) {
         self.isUserMessage = isUserMessage
         self.content = content
         self.timestamp = timestamp
@@ -52,4 +53,9 @@ struct Message: Identifiable {
         
         return (date: currentDate, time: currentTime)
     }
+}
+
+enum contentType {
+    case text(String)
+    //case image(/*image data*/)
 }
