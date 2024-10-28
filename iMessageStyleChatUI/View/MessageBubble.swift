@@ -9,51 +9,21 @@ import SwiftUI
 
 struct MessageBubble: View {
     @Environment(\.colorScheme) var colorScheme
-    
-    var isUserMessage: Bool
+    let isUserMessage: Bool
     let content: contentType
     let dateTime: (date: String, time: String)
     
     var body: some View {
-        VStack{
-            messageDisplay
-            timeDisplay
-        }
-    }
-    
-    var messageDisplay: some View {
         HStack {
             if isUserMessage {Spacer()}
-            switch(content) {
-            case .text(let text) :
-                Text(text)
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                    .font(.system(size: 17))
-                    .foregroundColor(isUserMessage ? .white : .primary)
-                    .background(pickBubbleColor(isUserMessage))
-                    .cornerRadius(20)
-                    .frame(maxWidth: 285, alignment: isUserMessage ? .trailing : .leading)
-                    .padding(isUserMessage ? .trailing : .leading, 5)
-                    .background(alignment: isUserMessage ? .bottomTrailing :.bottomLeading) {
-                        Image(isUserMessage ? "outgoingTail" : "incomingTail")
-                            .renderingMode(.template)
-                            .foregroundStyle(pickBubbleColor(isUserMessage))
-                    }
+            VStack{
+                switch(content) {
+                case .text(let text):
+                    TextMessageDisplay(isUserMessage, text, colorScheme)
+                }
+                timeDisplay
             }
             if !isUserMessage {Spacer()}
-        }
-    }
-    
-    func pickBubbleColor(_ isUserMessage: Bool) -> Color {
-        if isUserMessage {
-            return Color(.systemBlue)
-        } else {
-            if colorScheme == .light {
-                return .incomingMessageLight
-            } else {
-                return .incomingMessageDark
-            }
         }
     }
     
@@ -71,12 +41,18 @@ struct MessageBubble: View {
             }
         }
     }
-}
-
-extension Color {
-    static let incomingMessageDark = Color(red: 38/255, green: 38/255, blue: 41/255)
-    static let incomingMessageLight = Color(red: 233/255, green: 233/255, blue: 234/255)
-    static let outgoingMessageColor = Color(.systemBlue)
+    
+    static func pickBubbleColor(_ isUserMessage: Bool, _ colorScheme: ColorScheme) -> Color {
+        if isUserMessage {
+            return Color(.systemBlue)
+        } else {
+            if colorScheme == .light {
+                return .incomingMessageLight
+            } else {
+                return .incomingMessageDark
+            }
+        }
+    }
 }
 
 #Preview {
