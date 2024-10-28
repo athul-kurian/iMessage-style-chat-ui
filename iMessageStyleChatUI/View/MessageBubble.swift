@@ -14,16 +14,9 @@ struct MessageBubble: View {
     let dateTime: (date: String, time: String)
     
     var body: some View {
-        HStack {
-            if isUserMessage {Spacer()}
-            VStack{
-                switch(content) {
-                case .text(let text):
-                    TextMessageDisplay(isUserMessage, text, colorScheme)
-                }
-                timeDisplay
-            }
-            if !isUserMessage {Spacer()}
+        VStack{
+            createMessageDisplay(from: content)
+            timeDisplay
         }
     }
     
@@ -42,7 +35,7 @@ struct MessageBubble: View {
         }
     }
     
-    static func pickBubbleColor(_ isUserMessage: Bool, _ colorScheme: ColorScheme) -> Color {
+    var pickBubbleColor: Color {
         if isUserMessage {
             return Color(.systemBlue)
         } else {
@@ -53,6 +46,39 @@ struct MessageBubble: View {
             }
         }
     }
+    
+    @ViewBuilder
+    func createMessageDisplay(from content: contentType) -> some View {
+        switch(content) {
+        case .text(let text):
+            createTextMessageDisplay(from: text)
+        }
+    }
+    
+    func createTextMessageDisplay(from text: String) -> some View {
+        HStack {
+            if isUserMessage {Spacer()}
+            Text(text)
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+                .font(.system(size: 17))
+                .foregroundColor(isUserMessage ? .white : .primary)
+                .background(pickBubbleColor)
+                .cornerRadius(20)
+                .frame(maxWidth: 285, alignment: isUserMessage ? .trailing : .leading)
+                .padding(isUserMessage ? .trailing : .leading, 5)
+                .background(alignment: isUserMessage ? .bottomTrailing :.bottomLeading) {
+                    Image(isUserMessage ? "outgoingTail" : "incomingTail")
+                        .renderingMode(.template)
+                        .foregroundStyle(pickBubbleColor)
+                }
+            if !isUserMessage {Spacer()}
+        }
+    }
+    
+//    func createImageDisplay(from text: String) -> some View {
+//
+//    }
 }
 
 #Preview {
