@@ -14,7 +14,7 @@ class ChatViewModel: ObservableObject {
         messagingModel.allMessages
     }
     
-    func addMessage(content: String, timestamp: Date) {
-        messagingModel.appendMessage(newMessageContent: content, timestamp: timestamp)
+    func sendMessage(content: contentType, timestamp: Date) {
+        messagingModel.appendMessage(content: content, timestamp: timestamp)
     }
 }

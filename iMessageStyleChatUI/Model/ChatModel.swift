@@ -10,8 +10,8 @@ import Foundation
 struct ChatModel {
     private(set) var allMessages: [Message]
     
-    mutating func appendMessage(newMessageContent: contentType, timestamp: Date) {
-        let userMessage = Message(isUserMessage: true, content: newMessageContent, timestamp: timestamp)
+    mutating func appendMessage(content: contentType, timestamp: Date) {
+        let userMessage = Message(isUserMessage: true, content: content, timestamp: timestamp)
         allMessages.append(userMessage)
         let reply = fetchReply()
         allMessages.append(reply)
