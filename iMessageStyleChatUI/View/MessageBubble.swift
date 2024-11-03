@@ -15,7 +15,11 @@ struct MessageBubble: View {
     
     var body: some View {
         VStack{
-            createMessageDisplay(from: content)
+            HStack {
+                if isUserMessage {Spacer()}
+                createMessageDisplay(from: content)
+                if !isUserMessage {Spacer()}
+            }
             timeDisplay
         }
     }
@@ -35,7 +39,7 @@ struct MessageBubble: View {
         }
     }
     
-    var pickBubbleColor: Color {
+    var bubbleColor: Color {
         if isUserMessage {
             return Color(.systemBlue)
         } else {
@@ -52,47 +56,60 @@ struct MessageBubble: View {
         switch(content) {
         case .text(let text):
             createTextMessageDisplay(from: text)
+        case .image(let imageFileName):
+            createImageMessageDisplay(from : imageFileName)
         }
     }
     
     func createTextMessageDisplay(from text: String) -> some View {
-        HStack {
-            if isUserMessage {Spacer()}
-            Text(text)
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                .font(.system(size: 17))
-                .foregroundColor(isUserMessage ? .white : .primary)
-                .background(pickBubbleColor)
-                .cornerRadius(20)
-                .frame(maxWidth: 285, alignment: isUserMessage ? .trailing : .leading)
-                .padding(isUserMessage ? .trailing : .leading, 5)
-                .background(alignment: isUserMessage ? .bottomTrailing :.bottomLeading) {
-                    Image(isUserMessage ? "outgoingTail" : "incomingTail")
-                        .renderingMode(.template)
-                        .foregroundStyle(pickBubbleColor)
-                }
-            if !isUserMessage {Spacer()}
-        }
+        Text(text)
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+            .font(.system(size: 17))
+            .foregroundColor(isUserMessage ? .white : .primary)
+            .background(bubbleColor)
+            .cornerRadius(20)
+            .frame(maxWidth: 285, alignment: isUserMessage ? .trailing : .leading)
+            .padding(isUserMessage ? .trailing : .leading, 5)
+            .background(alignment: isUserMessage ? .bottomTrailing :.bottomLeading) {
+                Image(isUserMessage ? "outgoingTail" : "incomingTail")
+                    .renderingMode(.template)
+                    .foregroundStyle(bubbleColor)
+            }
     }
     
-//    func createImageDisplay(from text: String) -> some View {
-//
-//    }
+    func createImageMessageDisplay(from imageFileName: String) -> some View {
+        Image(imageFileName)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 25))
+            .frame(maxWidth: 260, alignment: isUserMessage ? .trailing : .leading)
+
+    }
 }
 
 #Preview {
-    MessageBubble(
-        isUserMessage: true,
-        content: .text("Hello, how are you today?"),
-        dateTime: ("", "10:10 AM")
-    ).border(.red)
-    .padding()
-    
-    MessageBubble(
-        isUserMessage: false,
-        content: .text("I'm fine, thanks for asking."),
-        dateTime: ("", "10:10 AM")
-    ).border(.red)
+    ScrollView {
+        VStack(alignment: .trailing) {
+                MessageBubble(
+                    isUserMessage: true,
+                    content: .text("Hello, how are you today?"),
+                    dateTime: ("", "10:10 AM")
+                ).border(.red)
+                
+                MessageBubble(
+                    isUserMessage: false,
+                    content: .text("I'm fine, thanks for asking."),
+                    dateTime: ("", "10:10 AM")
+                ).border(.red)
+                
+                MessageBubble(
+                    isUserMessage: true,
+                    content: .image("1:1"),
+                    dateTime: ("","10:10 AM")
+                ).border(.red)
+            }
+    }//.border(.red)
     .padding()
 }
+    

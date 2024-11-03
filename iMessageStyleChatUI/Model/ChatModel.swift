@@ -13,13 +13,13 @@ struct ChatModel {
     mutating func appendMessage(content: contentType, timestamp: Date) {
         let userMessage = Message(isUserMessage: true, content: content, timestamp: timestamp)
         allMessages.append(userMessage)
-        let reply = fetchReply()
-        allMessages.append(reply)
+        fetchReply()
     }
     
-    private func fetchReply() -> Message {
+    private mutating func fetchReply() {
         let replyContent = contentType.text("This is an automated reply.")
-        return Message(isUserMessage: false, content: replyContent, timestamp: Date())
+        allMessages.append(Message(isUserMessage: false, content: replyContent, timestamp: Date()))
+        allMessages.append(Message(isUserMessage: false, content: .image("16:9"), timestamp: Date()))
     }
     
     mutating func removeMessage(id: Double) {
@@ -57,5 +57,5 @@ struct Message: Identifiable {
 
 enum contentType {
     case text(String)
-    //case image(/*image data*/)
+    case image(String)
 }
