@@ -21,13 +21,7 @@ struct ChatHeader: View {
         .padding(.top, 45)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
-        .background(.thinMaterial)
-        .overlay(
-            Rectangle()
-                .frame(height: 1.5) // Border thickness
-                .foregroundColor(.gray.opacity(0.1)), // Border color
-            alignment: .bottom
-        )
+        .background(.regularMaterial)
         .ignoresSafeArea(edges: .top)
     }
 }
