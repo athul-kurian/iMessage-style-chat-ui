@@ -40,7 +40,7 @@ struct Message: Identifiable {
         self.id = timestamp.timeIntervalSince1970
     }
     
-    func getDateTime() -> (date: String, time: String) {
+    var dateTime: (date: String, time: String) {
         let formatter = DateFormatter()
         
         formatter.timeStyle = .short

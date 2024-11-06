@@ -21,8 +21,8 @@ struct ChatView: View {
                             let messages = chatViewModel.allMessages
                             ForEach(0..<messages.count, id: \.self) { index in
                                 let message = messages[index]
-                                if index == 0 || message.getDateTime().date != messages[index-1].getDateTime().date {
-                                    Text(message.getDateTime().date)
+                                if index == 0 || message.dateTime.date != messages[index-1].dateTime.date {
+                                    Text(message.dateTime.date)
                                         .foregroundStyle(.secondary)
                                         .font(.system(size: 13))
                                         .padding(.vertical)
@@ -30,7 +30,7 @@ struct ChatView: View {
                                 MessageBubble(
                                     isUserMessage: message.isUserMessage,
                                     content: message.content,
-                                    dateTime: message.getDateTime()
+                                    dateTime: message.dateTime
                                 ).id(index+1)
                             }.onChange(of: messages.count) { value in
                                 withAnimation(.spring) {
