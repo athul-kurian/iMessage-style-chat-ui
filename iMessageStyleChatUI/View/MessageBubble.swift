@@ -41,7 +41,7 @@ struct MessageBubble: View {
     
     var bubbleColor: Color {
         if isUserMessage {
-            return Color(.systemBlue)
+            return .outgoingMessage
         } else {
             if colorScheme == .light {
                 return .incomingMessageLight

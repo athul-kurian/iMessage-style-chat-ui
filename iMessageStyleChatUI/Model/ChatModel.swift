@@ -22,27 +22,20 @@ struct ChatModel {
         allMessages.append(Message(isUserMessage: false, content: .image("16:9"), timestamp: Date()))
     }
     
-    mutating func removeMessage(id: Double) {
+    mutating func removeMessage(id: UUID) {
         allMessages.removeAll(where: {$0.id == id})
     }
 }
 
 struct Message: Identifiable {
+    let id: UUID = UUID()
     let isUserMessage: Bool
     let content: contentType
     let timestamp: Date
-    let id: Double
-    
-    init(isUserMessage: Bool, content: contentType, timestamp: Date) {
-        self.isUserMessage = isUserMessage
-        self.content = content
-        self.timestamp = timestamp
-        self.id = timestamp.timeIntervalSince1970
-    }
     
     var dateTime: (date: String, time: String) {
         let formatter = DateFormatter()
-        
+            
         formatter.timeStyle = .short
         formatter.dateStyle = .none
         let currentTime = formatter.string(from: timestamp)
