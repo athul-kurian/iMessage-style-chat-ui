@@ -25,26 +25,26 @@ struct ChatModel {
     mutating func removeMessage(id: UUID) {
         allMessages.removeAll(where: {$0.id == id})
     }
-}
-
-struct Message: Identifiable {
-    let id: UUID = UUID()
-    let isUserMessage: Bool
-    let content: contentType
-    let timestamp: Date
     
-    var dateTime: (date: String, time: String) {
-        let formatter = DateFormatter()
-            
-        formatter.timeStyle = .short
-        formatter.dateStyle = .none
-        let currentTime = formatter.string(from: timestamp)
-
-        formatter.timeStyle = .none
-        formatter.dateStyle = .medium
-        let currentDate = formatter.string(from: timestamp)
+    struct Message: Identifiable {
+        let id: UUID = UUID()
+        let isUserMessage: Bool
+        let content: contentType
+        let timestamp: Date
         
-        return (date: currentDate, time: currentTime)
+        var dateTime: (date: String, time: String) {
+            let formatter = DateFormatter()
+                
+            formatter.timeStyle = .short
+            formatter.dateStyle = .none
+            let currentTime = formatter.string(from: timestamp)
+
+            formatter.timeStyle = .none
+            formatter.dateStyle = .medium
+            let currentDate = formatter.string(from: timestamp)
+            
+            return (date: currentDate, time: currentTime)
+        }
     }
 }
 

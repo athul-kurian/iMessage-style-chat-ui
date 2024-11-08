@@ -9,6 +9,7 @@ import SwiftUI
 
 class ChatViewModel: ObservableObject {
     @Published var messagingModel = ChatModel(allMessages: [])
+    typealias Message = ChatModel.Message
     
     var allMessages: Array<Message> {
         messagingModel.allMessages

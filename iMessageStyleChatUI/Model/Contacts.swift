@@ -21,22 +21,21 @@ struct PhoneBook {
                         middleName: middleName,
                         lastName: lastName,
                         number: number,
-                        photo: photo,
-                        dateCreated: Date()
+                        photo: photo
                     )
 
         contactList.append(contact)
         return true
     }
-}
-
-struct Contact: Identifiable {
-    let id: UUID = UUID()
-    let firstName: String?
-    let middleName: String?
-    let lastName: String?
-    let number: String?
-    let photo: String?
-    let dateCreated: Date
+    
+    struct Contact: Identifiable {
+        let id: UUID = UUID()
+        let firstName: String?
+        let middleName: String?
+        let lastName: String?
+        let number: String?
+        let photo: String?
+        let dateCreated: Date = Date()
+    }
 }
 
