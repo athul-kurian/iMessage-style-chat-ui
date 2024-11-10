@@ -11,18 +11,19 @@ struct MessageField: View {
     @State var typedMessage: String = ""
     var chatViewModel: ChatViewModel
     
+    var geometry: GeometryProxy
+    
     var body: some View {
-        
         HStack(alignment: .bottom) {
             Image(systemName: "plus")
                 .foregroundStyle(.secondary)
-                .padding(10)
-                .background(Circle().foregroundStyle(.gray.opacity(0.25)))
+                .padding(geometry.size.width * .plusButtonPaddingScalingFactor)
+                .background(Circle().foregroundStyle(.gray.opacity(.messageFieldPlusButtonOpacity)))
             
             HStack(alignment: .bottom) {
                 TextField("iMessage", text: $typedMessage, axis: .vertical)
                     .padding(.horizontal)
-                    .padding(.bottom, 5)
+                    .padding(.bottom, geometry.size.height * .textFieldBottomPaddingScalingFactor)
                 
                 Button {
                     let timestamp = Date()
@@ -36,23 +37,22 @@ struct MessageField: View {
                         .foregroundStyle(Color.blue)
                         .font(.title)
                         .background(Circle()
-                            .frame(width: 25)
                             .foregroundStyle(.white)
                         )
                 }
-            }.padding(3)
+            }.padding(geometry.size.height * .messageFieldInnerPaddingScalingFactor)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: .messageFieldCornerRadius)
                         .stroke()
                         .foregroundStyle(.quaternary)
                 )
-        }
-        
+        }.padding(.bottom, geometry.size.height * .messageFieldBottomPaddingScalingFactor)
+            .padding(.horizontal, geometry.size.width * .messageFieldHorizontalPaddingScalingFactor)
     }
 }
 
-#Preview {
-    MessageField(chatViewModel: ChatViewModel())
-        //.border(.red)
-        .padding()
-}
+//#Preview {
+//    MessageField(chatViewModel: ChatViewModel())
+//        //.border(.red)
+//        .padding()
+//}

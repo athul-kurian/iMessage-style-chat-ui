@@ -12,3 +12,26 @@ extension Color {
     static let incomingMessageLight = Color(red: 233/255, green: 233/255, blue: 234/255)
     static let outgoingMessage = Color(.systemBlue)
 }
+
+extension CGFloat {
+    //Message Bubble
+    static let textBubbleCornerRadius: CGFloat = 25
+    static let imageCornerRadius: CGFloat = 20
+    static let messagePaddingScalingFactor: CGFloat = 0.0125
+    static let textVerticalPaddingScalingFactor: CGFloat = 0.01
+    static let imageFrameMaxWidthScalingFactor: CGFloat = 0.65
+    static let textBubbleMaxWidthScalingFactor: CGFloat = 0.72
+    
+    //Message Field
+    static let messageFieldCornerRadius: CGFloat = 20
+    static let messageFieldBottomPaddingScalingFactor: CGFloat = 0.01
+    static let messageFieldHorizontalPaddingScalingFactor: CGFloat = 0.04
+    static let messageFieldInnerPaddingScalingFactor: CGFloat = 0.003
+    static let textFieldBottomPaddingScalingFactor: CGFloat = 0.006
+    static let plusButtonPaddingScalingFactor: CGFloat = 0.025
+}
+
+extension Double {
+    //Message Field
+    static let messageFieldPlusButtonOpacity: CGFloat = 0.25
+}
